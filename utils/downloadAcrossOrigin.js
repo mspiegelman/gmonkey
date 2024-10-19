@@ -1,6 +1,6 @@
 // A utility function for downloading url based files across origins
 
-const download = (
+const downloadAcrossOrigin = (
     url,      // URL of the file to download as a string
     callback, // Function to call once download has started
 ) => {
