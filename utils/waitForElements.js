@@ -24,9 +24,9 @@ const waitForKeyElements = (
   const targetNodes = getTargetNodes(selectorOrFunction);
  
   if (targetsFound = targetNodes.length > 0) {
-    targetNodes.forEach(([selector, node]) => {
+    targetNodes.forEach(async ([selector, node]) => {
       if (!node.getAttribute(FOUND_ATTR)) {
-        targetsFound = callback(node, selector) ? false : !node.setAttribute(FOUND_ATTR, true);
+        targetsFound = (await callback(node, selector)) ? false : !node.setAttribute(FOUND_ATTR, true);
       }
     });
   }
