@@ -3,9 +3,11 @@
 const FOUND_ATTR = 'data-userscript-alreadyFound';
 
 const getTargetNodes = selector => {
+    if (selector === undefined) return [];
 	if (typeof selector === 'function') return (selector() || []).map(n => [selector.name, n]);
 	if (typeof selector === 'string') return [...document.querySelectorAll(selector)].map(n => [selector, n]);
-	return selector.flatMap(s => [...document.querySelectorAll(s)].map(n => [s, n]));
+    if (selector.every(s => document.querySelectorAll(s).length > 0)) return selector.flatMap(s => [...document.querySelectorAll(s)].map(n => [s, n]));
+    return [];
 };
 
 const waitForKeyElements = (
