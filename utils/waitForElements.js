@@ -56,9 +56,15 @@ const waitForKeyElements = (
     waitForAll = waitForAll === undefined ? true : waitForAll;
 
     const targetNodes = getTargetNodes(selectorOrFunction, waitForAll);
-    const targetsFound = !targetNodes ? false : targetNodes
-        .map(async t => !t.getAttribute(FOUND_ATTR) && (!!(await callback(t)) || !!t.setAttribute(FOUND_ATTR, true)))
-        .every(t => !t);
+    
+    let targetsFound = targetNodes.length > 0;
+    if (targetsFound) {
+        targetNodes.forEach(async node => {
+            if (!node.getAttribute(FOUND_ATTR)) {
+                targetsFound = (await callback(node)) ? false : !node.setAttribute(FOUND_ATTR, true);
+            }
+        });
+    }
  
     if (maxIntervals !== 0 && !(targetsFound && waitOnce)) {
         setTimeout(() => waitForKeyElements(selectorOrFunction, callback, {
