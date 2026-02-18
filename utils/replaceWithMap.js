@@ -11,3 +11,5 @@ const replaceWithMap = (str, map) => {
     const invertedMap = invertMap(map);
     return str.replace(new RegExp(Object.keys(invertedMap).join('|'), 'g'), m => invertedMap[m]);
 };
+
+const addSpaces = str => str.replace(/([a-z])([A-Z])/g, '$1 $2').trim();
